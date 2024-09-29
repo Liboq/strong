@@ -42,7 +42,13 @@ git clean -d
 git branch -d dev
 // 获取远程仓库地址
 git remote -v
+// 设置远程仓库地址
+git remote add origin **.git
 // 修改远程仓库地址
 git remote set-url  origin **.git
+// 指定上传到远程的分支名称
+git push --set-upstream origin main
+// 改名 
+git branch -m main
 ```
 
