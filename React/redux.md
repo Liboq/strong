@@ -1,0 +1,9 @@
+## redux
+
+dispatch
+
+getState
+
+subscribe
+
+   
