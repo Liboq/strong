@@ -1,19 +1,26 @@
 ---
-description: 滑动窗口与双指针联系与学习
-icon: '2'
+cover: >-
+  https://images.unsplash.com/photo-1550105128-0feb264c86ed?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHw3fHwlRTUlODYlQjAlRTklOUIlQUF8ZW58MHx8fHwxNzM2ODIxNDUzfDA&ixlib=rb-4.0.3&q=85
+coverY: 0
+layout:
+  cover:
+    visible: true
+    size: hero
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
-# 滑动窗口与双指针
+# 🦸 定长滑动窗口
 
-
-
-{% embed url="https://leetcode.cn/circle/discuss/0viNMK/" %}
-滑动窗口与双指针
-{% endembed %}
-
-### 练习
-
-### 一、定长滑动窗口 <a href="#yi-ding-chang-hua-dong-chuang-kou" id="yi-ding-chang-hua-dong-chuang-kou"></a>
+### 一、练习 <a href="#yi-ding-chang-hua-dong-chuang-kou" id="yi-ding-chang-hua-dong-chuang-kou"></a>
 
 #### 1.[定长子串中元音的最大数目](https://leetcode.cn/problems/maximum-number-of-vowels-in-a-substring-of-given-length/)
 
@@ -263,3 +270,31 @@ var minSwaps = function (nums) {
 >
 > * 子数组指的是数组中一段连续 **非空** 的元素序列。
 
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @param {number} x
+ * @return {number[]}
+ */
+const getMinuByK = (k, arr) => {
+    const newArr = [...arr]
+    console.log(newArr.sort((a, b) => a - b))
+    return newArr.sort((a, b) => a - b)[k - 1]
+}
+var getSubarrayBeauty = function (nums, k, x) {
+    let res = []
+    let arr = []
+    for (let i = 0; i < nums.length; i++) {
+        arr.push(nums[i])
+        if (i < k - 1) {
+            continue
+        }
+        let cur = getMinuByK(x, arr)
+        cur = cur > 0 ? 0 : cur
+        res.push(cur)
+        arr.shift()
+    }
+    return res
+};
+```
