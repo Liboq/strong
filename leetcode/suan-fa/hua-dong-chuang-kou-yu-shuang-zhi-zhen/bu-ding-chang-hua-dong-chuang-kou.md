@@ -233,3 +233,79 @@ var minSubArrayLen = function (target, nums) {
 
 };
 ```
+
+#### 7.[包含所有三种字符的子字符串数目](https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/)
+
+> 给你一个字符串 `s` ，它只包含三种字符 a, b 和 c 。
+>
+> 请你返回 a，b 和 c 都 **至少** 出现过一次的子字符串数目。
+
+```javascript
+/**
+ * @param {string} s - 输入字符串，由 'a', 'b', 'c' 组成。
+ * @return {number} - 包含所有三个字符的子字符串的数量。
+ */
+var numberOfSubstrings = function (s) {
+    let left = 0; // 滑动窗口的起始位置
+    let right = 0; // 滑动窗口的结束位置
+    const map = new Map(); // 用于在窗口内统计字符出现次数的映射
+    let res = 0; // 结果用于存储有效子字符串的数量
+
+    // 使用右指针遍历字符串
+    while (right < s.length) {
+        // 将当前字符添加到映射中
+        map.set(s[right], (map.get(s[right]) || 0) + 1);
+        
+        // 检查当前窗口是否至少包含一个 'a', 'b', 'c'
+        while (map.get('a') > 0 && map.get('b') > 0 && map.get('c') > 0) {
+            // 从左侧滑动窗口以移除多余字符
+            map.set(s[left], (map.get(s[left]) || 0) - 1);
+            left++; // 将左指针右移
+        }
+        right++; // 从右侧扩展窗口
+
+        // 添加以 'right' 结束的有效子字符串的数量
+        res += left;
+    }
+
+    return res; // 返回总的子字符串
+    
+```
+
+#### 8. [统计最大元素出现至少 K 次的子数组](https://leetcode.cn/problems/count-subarrays-where-max-element-appears-at-least-k-times/)
+
+> 给你一个整数数组 `nums` 和一个 **正整数** `k` 。
+>
+> 请你统计有多少满足 「 `nums` 中的 **最大** 元素」至少出现 `k` 次的子数组，并返回满足这一条件的子数组的数目。
+>
+> 子数组是数组中的一个连续元素序列。
+
+```javascript
+/**
+* @param {number[]} nums
+* @param {number} k
+* @return {number}
+*/
+var countSubarrays = function (nums, k) {
+    let res = 0
+    let left = 0
+    let right = 0
+    let maxNum = 0
+    let max = Math.max(...nums)
+    while (right < nums.length) {
+        if (max === nums[right]) {
+            maxNum++
+        }
+
+        while (maxNum >= k) {
+            if (nums[left] === max) {
+                maxNum--
+            }
+            left++
+        }
+        res += left
+        right++
+    }
+    return res
+};
+```
