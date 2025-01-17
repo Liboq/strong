@@ -234,6 +234,8 @@ var minSubArrayLen = function (target, nums) {
 };
 ```
 
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 #### 7.[包含所有三种字符的子字符串数目](https://leetcode.cn/problems/number-of-substrings-containing-all-three-characters/)
 
 > 给你一个字符串 `s` ，它只包含三种字符 a, b 和 c 。
@@ -309,3 +311,82 @@ var countSubarrays = function (nums, k) {
     return res
 };
 ```
+
+<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+#### 9.[乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/)
+
+> 给你一个整数数组 `nums` 和一个整数 `k` ，请你返回子数组内所有元素的乘积严格小于 `k` 的连续子数组的数目。
+
+```javascript
+/**
+ * 计算乘积小于 k 的子数组的数量
+ * @param {number[]} nums 输入的整数数组
+ * @param {number} k 阈值 k
+ * @return {number} 符合条件的子数组数量
+ */
+var numSubarrayProductLessThanK = function (nums, k) {
+    let res = 0 // 记录符合条件的子数组数量
+    let left = 0 // 左指针初始化
+    let right = 0 // 右指针初始化
+    let cal = 1 // 当前子数组的乘积初始化
+    while (right < nums.length) {
+        cal *= nums[right] // 更新乘积
+        while (cal >= k && left <= right) { // 如果乘积不满足条件
+            cal = cal / nums[left] // 缩小窗口，从左边开始移动
+            left++
+        }
+        res += right - left + 1 // 更新结果
+        right++ // 移动右指针
+    }
+    return res // 返回结果
+};
+```
+
+在上述算法中，通过双指针技巧计算乘积小于 `k` 的子数组数量。当右指针增加而窗口内的乘积依然小于 `k` 时，意味着从 `left` 到 `right` 的所有子数组满足条件。
+
+对于每一个新的右指针位置 `right`，如果当前乘积条件仍然成立，那么从当前左指针 `left` 开始，到右指针 `right` 的连续子数组都是有效的。因此，在每次 `right` 扩展时，以 `right` 为结尾的子数组数量等于 `right - left + 1`，这覆盖了：
+
+* 单一元素子数组 `[nums[right]]`
+* 两个元素子数组 `[nums[right-1], nums[right]]`
+* 直到 `[nums[left], ..., nums[right]]` 的所有可能子数组
+
+将这些数量累加到 `res` 中即可得到满足条件的子数组总数。这个方法通过滑动窗口和乘积调整，实现了在O(n)时间复杂度内高效统计子数组数量。
+
+#### 10.[统计满足 K 约束的子字符串数量 I](https://leetcode.cn/problems/count-substrings-that-satisfy-k-constraint-i/)
+
+> 给你一个 **二进制** 字符串 `s` 和一个整数 `k`。
+>
+> 如果一个 **二进制字符串** 满足以下任一条件，则认为该字符串满足 **k 约束**：
+>
+> * 字符串中 `0` 的数量最多为 `k`。
+> * 字符串中 `1` 的数量最多为 `k`。
+>
+> 返回一个整数，表示 `s` 的所有满足 **k 约束** 的
+>
+> 子字符串的数量。
+
+```javascript
+/**
+ * @param {string} s - 输入的字符串
+ * @param {number} k - 限制条件
+ * @return {number} - 满足条件的子字符串数量
+ */
+var countKConstraintSubstrings = function (s, k) {
+    const arr = [0, 0];  // 用于记录0和1的个数
+    let left = 0;  // 左指针
+    let right = 0;  // 右指针
+    let res = 0;  // 满足条件的子字符串数量
+    while (right < s.length) {  // 遍历字符串
+        arr[s[right]]++;  // 增加当前字符计数
+        while (arr[0] > k && arr[1] > k) {  // 如果0或1的个数超过k
+            arr[s[left]]--;  // 减少左边字符计数
+            left++;  // 移动左指针
+        }
+        res += right - left + 1;  // 增加满足条件的子字符串数量
+        right++;// 移动右指针
+    }
+    return res;  // 返回结果
+};
+```
+
