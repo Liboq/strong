@@ -97,3 +97,5 @@
   * [腾娱](面试/腾娱.md)
   * [腾讯云智](面试/腾讯云智.md)
   * [重复请求合并](面试/重复请求合并.md)
+* [前端工程化](qian-duan-gong-cheng-hua/README.md)
+  * [在 pnpm Monorepo 中使用公共方法包](qian-duan-gong-cheng-hua/zai-pnpm-monorepo-zhong-shi-yong-gong-gong-fang-fa-bao.md)
